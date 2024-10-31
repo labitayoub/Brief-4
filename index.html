@@ -80,8 +80,7 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
-                            I agree to the Terms and conditions
-                            Already registered?
+                            I agree to the Terms and conditions.
                         </label>
                       </div>
                       <div class="form-check">
@@ -96,11 +95,49 @@
                     </div>
                 </div>
             </form>
-            
+            <div class="infos-confirmation card-title d-none" id="section4">
+                <h2 class="text-center text-uppercase text-primary">
+                  your informations
+                </h2>
+                <div class="name pt-5 d-flex align-items-center">
+                  <h4>Name:</h4>
+                  <p id="name-info" class="m-0 pl-4"></p>
+                </div>
+                <div class="age d-flex align-items-center">
+                  <h4>Age:</h4>
+                  <p id="age-info" class="m-0 pl-4"></p>
+                </div>
+                <div class="email d-flex align-items-center">
+                  <h4>Email:</h4>
+                  <p id="email-info" class="m-0 pl-4"></p>
+                </div>
+                <div class="phone d-flex align-items-center">
+                  <h4>Phone Number:</h4>
+                  <p id="phone-info" class="m-0 pl-4"></p>
+                </div>
+                  <div class="feedback d-flex align-items-center">
+                  <h4>Feedback:</h4>
+                  <p id="feedback-info" class="m-0 pl-4"></p>
+                </div>
+    
+                <div class="d-flex justify-content-between">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="prevSection(2)"
+                  >
+                    Previous
+                  </button>
+      
+                  <button type="button"class="btn btn-primary"onclick="confirmation()">confirmation</button>
+                </div>
+              </div>
+      
         </div>
         
     </div>
 </div>
+
 <br><br><br>
 
 <!-- JavaScript for Navigation -->
@@ -119,11 +156,27 @@
     }
 
     function submitForm(event) {
-        event.preventDefault(); // Prevent default form submission
-        alert("Form submitted successfully!");
-        document.getElementById("multiSectionForm").reset(); // Reset form fields
-        showSection(1); // Reset to the first section
+
+        const nameInfo=document.getElementById("name").value;
+        const ageInfo=document.getElementById("age").value;
+        const emailInfo=document.getElementById("email").value;
+        const phoneInfo=document.getElementById("phone").value;
+        const feedbackInfo=document.getElementById("feedback").value;
+
+        event.preventDefault();
+        document.getElementById("name-info").innerHTML=nameInfo;
+        document.getElementById("age-info").innerHTML=ageInfo;
+        document.getElementById("email-info").innerHTML=emailInfo;
+        document.getElementById("phone-info").innerHTML=phoneInfo;
+        document.getElementById("feedback-info").innerHTML=feedbackInfo;
+        document.getElementById('section3').classList.add('d-none');
+        document.getElementById('section4').classList.remove('d-none');
+
+        document.getElementById("multiSectionForm").reset();
+
     }
+
+
 </script>
 
 <link rel="stylesheet" href="">
