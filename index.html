@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Section Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="bootstrap-5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    
+    <header>          
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">DataCollect Inc</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                </ul>
+                <form class="d-flex" role="search">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              </div>
+            </div>
+          </nav>
+          <img src="assets/header-cover.avif" width="100%" height="380px">
+    </header>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <!-- <h2 class="card-title text-center">Les informations Personnelles</h2> -->
+
+            <form id="multiSectionForm" onsubmit="submitForm(event)">
+                <!-- Section 1 -->
+                
+                <div class="section" id="section1">
+                    <div class="form-group">
+                        <h2 class="card-title text-center">Personal information</h2>
+                        <label for="name">Name:</label>
+                        <input name="name" placeholder="Please enter your full name" type="text" id="name" class="form-control" >
+                    </div><br>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input name="number" placeholder="Enter age" type="number" id="age" class="form-control" >
+                    </div><br>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-success" onclick="nextSection(2)">Next</button>
+                    </div>
+                </div>
+
+                <!-- Section 2 -->
+                <div class="section d-none" id="section2">
+                    <div class="form-group">
+                        <h2 class="card-title text-center">Professional Contacts</h2>
+                        <label for="email">Email:</label>
+                        <input name="email" placeholder="Enter your email address" type="email" id="email" class="form-control" >
+                    </div><br>
+                    <div class="form-group">
+                        
+                        <label for="phone">Phone Number:</label>
+                        <input name="phone" placeholder="Enter your phone number" type="tel" id="phone" class="form-control" >
+                    </div><br>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" onclick="prevSection(1)">Previous</button>
+                        <button type="button" class="btn btn-success" onclick="nextSection(3)">Next</button>
+                    </div>
+                </div>
+
+                <!-- Section 3 -->
+                <div class="section d-none" id="section3">
+                    <div class="form-group">
+                        <h2 class="card-title text-center">Experience feedback</h2>
+                        <label for="feedback">Feedback:</label><br>
+                        <textarea name="feedback" placeholder="commentaires sur la satisfaction au travail" id="feedback" rows="4" class="form-control" ></textarea>
+                    </div><br>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            I agree to the Terms and conditions
+                            Already registered?
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            all the information is correct
+                        </label>
+                      </div><br>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" onclick="prevSection(2)">Previous</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+        
+    </div>
+</div>
+<br><br><br>
+
+<!-- JavaScript for Navigation -->
+<script>
+    function showSection(sectionNumber) {
+        document.querySelectorAll('.section').forEach(section => section.classList.add('d-none'));
+        document.getElementById('section' + sectionNumber).classList.remove('d-none');
+    }
+
+    function nextSection(sectionNumber) {
+        showSection(sectionNumber);
+    }
+
+    function prevSection(sectionNumber) {
+        showSection(sectionNumber);
+    }
+
+    function submitForm(event) {
+        event.preventDefault(); // Prevent default form submission
+        alert("Form submitted successfully!");
+        document.getElementById("multiSectionForm").reset(); // Reset form fields
+        showSection(1); // Reset to the first section
+    }
+</script>
+
+<link rel="stylesheet" href="">
+<!-- Bootstrap JS (optional) -->
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script> -->
+<script src="bootstrap-5.3.3/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
