@@ -32,20 +32,19 @@
 <div class="container mt-5">
     <div class="card">
         <div class="card-body">
-            <!-- <h2 class="card-title text-center">Les informations Personnelles</h2> -->
-
             <form id="multiSectionForm" onsubmit="submitForm(event)">
                 <!-- Section 1 -->
-                
                 <div class="section" id="section1">
                     <div class="form-group">
                         <h2 class="card-title text-center">Personal information</h2>
                         <label for="name">Name:</label>
                         <input name="name" placeholder="Please enter your full name" type="text" id="name" class="form-control" >
+                        <span id="nameError" class="text-danger"></span>
                     </div><br>
                     <div class="form-group">
                         <label for="age">Age:</label>
-                        <input name="number" placeholder="Enter age" type="number" id="age" class="form-control" >
+                        <input name="age" placeholder="Enter age" type="number" id="age" class="form-control" >
+                        <span id="ageError" class="text-danger"></span>
                     </div><br>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-success" onclick="nextSection(2)">Next</button>
@@ -58,11 +57,12 @@
                         <h2 class="card-title text-center">Professional Contacts</h2>
                         <label for="email">Email:</label>
                         <input name="email" placeholder="Enter your email address" type="email" id="email" class="form-control" >
+                        <span id="emailError" class="text-danger"></span>
                     </div><br>
                     <div class="form-group">
-                        
                         <label for="phone">Phone Number:</label>
                         <input name="phone" placeholder="Enter your phone number" type="tel" id="phone" class="form-control" >
+                        <span id="phoneError" class="text-danger"></span>
                     </div><br>
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-secondary" onclick="prevSection(1)">Previous</button>
@@ -75,72 +75,45 @@
                     <div class="form-group">
                         <h2 class="card-title text-center">Experience feedback</h2>
                         <label for="feedback">Feedback:</label><br>
-                        <textarea name="feedback" placeholder="commentaires sur la satisfaction au travail" id="feedback" rows="4" class="form-control" ></textarea>
+                        <textarea name="feedback" placeholder="Comment on work satisfaction" id="feedback" rows="4" class="form-control" ></textarea>
+                        <span id="feedbackError" class="text-danger"></span>
                     </div><br>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" id="terms">
+                        <label class="form-check-label" for="terms">
                             I agree to the Terms and conditions.
                         </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            all the information is correct
+                        <span id="termsError" class="text-danger"></span>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="infoCorrect">
+                        <label class="form-check-label" for="infoCorrect">
+                            All information is correct
                         </label>
-                      </div><br>
+                        <span id="infoCorrectError" class="text-danger"></span>
+                    </div><br>
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-secondary" onclick="prevSection(2)">Previous</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
+
+                <div class="section d-none" id="section4">
+                    <h2>Thank You ||Your Informations||</h2>
+                    <p><strong>Name:</strong> <span id="name-info"></span></p>
+                    <p><strong>Age:</strong> <span id="age-info"></span></p>
+                    <p><strong>Email:</strong> <span id="email-info"></span></p>
+                    <p><strong>Phone:</strong> <span id="phone-info"></span></p>
+                    <p><strong>Feedback:</strong> <span id="feedback-info"></span></p>
+                </div>
             </form>
-            <div class="infos-confirmation card-title d-none" id="section4">
-                <h2 class="text-center text-uppercase text-primary">
-                  your informations
-                </h2>
-                <div class="name pt-5 d-flex align-items-center">
-                  <h4>Name:</h4>
-                  <p id="name-info" class="m-0 pl-4"></p>
-                </div>
-                <div class="age d-flex align-items-center">
-                  <h4>Age:</h4>
-                  <p id="age-info" class="m-0 pl-4"></p>
-                </div>
-                <div class="email d-flex align-items-center">
-                  <h4>Email:</h4>
-                  <p id="email-info" class="m-0 pl-4"></p>
-                </div>
-                <div class="phone d-flex align-items-center">
-                  <h4>Phone Number:</h4>
-                  <p id="phone-info" class="m-0 pl-4"></p>
-                </div>
-                  <div class="feedback d-flex align-items-center">
-                  <h4>Feedback:</h4>
-                  <p id="feedback-info" class="m-0 pl-4"></p>
-                </div>
-    
-                <div class="d-flex justify-content-between">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    onclick="prevSection(2)"
-                  >
-                    Previous
-                  </button>
-      
-                  <button type="button"class="btn btn-primary"onclick="confirmation()">confirmation</button>
-                </div>
-              </div>
-      
         </div>
-        
     </div>
 </div>
 
 <br><br><br>
 
-<!-- JavaScript for Navigation -->
+<!-- JavaScript for Validation and Navigation -->
 <script>
     function showSection(sectionNumber) {
         document.querySelectorAll('.section').forEach(section => section.classList.add('d-none'));
@@ -148,43 +121,95 @@
     }
 
     function nextSection(sectionNumber) {
-        showSection(sectionNumber);
+        if (validateSection(sectionNumber - 1)) {
+            showSection(sectionNumber);
+        }
     }
 
     function prevSection(sectionNumber) {
         showSection(sectionNumber);
     }
 
-    function submitForm(event) {
+    function validateSection(sectionNumber) {
+        let isValid = true;
 
-        const nameInfo=document.getElementById("name").value;
-        const ageInfo=document.getElementById("age").value;
-        const emailInfo=document.getElementById("email").value;
-        const phoneInfo=document.getElementById("phone").value;
-        const feedbackInfo=document.getElementById("feedback").value;
+        document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
 
-        event.preventDefault();
-        document.getElementById("name-info").innerHTML=nameInfo;
-        document.getElementById("age-info").innerHTML=ageInfo;
-        document.getElementById("email-info").innerHTML=emailInfo;
-        document.getElementById("phone-info").innerHTML=phoneInfo;
-        document.getElementById("feedback-info").innerHTML=feedbackInfo;
-        document.getElementById('section3').classList.add('d-none');
-        document.getElementById('section4').classList.remove('d-none');
+        if (sectionNumber === 1) {
+            const name = document.getElementById("name").value.trim();
+            const age = document.getElementById("age").value.trim();
 
-        document.getElementById("multiSectionForm").reset();
+            if (name === "") {
+                document.getElementById("nameError").innerText = "Please enter your name.";
+                isValid = false;
+            }
+            if (age === "" || isNaN(age)) {
+                document.getElementById("ageError").innerText = "Please enter a valid age.";
+                isValid = false;
+            }
+        }
 
+        if (sectionNumber === 2) {
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+
+            if (email === "") {
+                document.getElementById("emailError").innerText = "Please enter a valid email.";
+                isValid = false;
+            }
+            if (phone === "") {
+                document.getElementById("phoneError").innerText = "Please enter a valid phone number.";
+                isValid = false;
+            }
+        }
+
+        if (sectionNumber === 3) {
+            const feedback = document.getElementById("feedback").value.trim();
+            const terms = document.getElementById("terms").checked;
+            const infoCorrect = document.getElementById("infoCorrect").checked;
+
+            if (feedback === "") {
+                document.getElementById("feedbackError").innerText = "Please provide feedback.";
+                isValid = false;
+            }
+            if (!terms) {
+                document.getElementById("termsError").innerText = "You must agree to the terms.";
+                isValid = false;
+            }
+            if (!infoCorrect) {
+                document.getElementById("infoCorrectError").innerText = "Please confirm all information is correct.";
+                isValid = false;
+            }
+        }
+
+        return isValid;
     }
 
+    function submitForm(event) {
+        event.preventDefault();
 
+        if (validateSection(3)) {
+            const nameInfo = document.getElementById("name").value;
+            const ageInfo = document.getElementById("age").value;
+            const emailInfo = document.getElementById("email").value;
+            const phoneInfo = document.getElementById("phone").value;
+            const feedbackInfo = document.getElementById("feedback").value;
+
+            document.getElementById("name-info").innerHTML = nameInfo;
+            document.getElementById("age-info").innerHTML = ageInfo;
+            document.getElementById("email-info").innerHTML = emailInfo;
+            document.getElementById("phone-info").innerHTML = phoneInfo;
+            document.getElementById("feedback-info").innerHTML = feedbackInfo;
+
+            document.getElementById('section3').classList.add('d-none');
+            document.getElementById('section4').classList.remove('d-none');
+
+            document.getElementById("multiSectionForm").reset();
+        }
+    }
 </script>
 
-<link rel="stylesheet" href="">
-<!-- Bootstrap JS (optional) -->
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script> -->
 <script src="bootstrap-5.3.3/dist/js/bootstrap.min.js"></script>
 
 </body>
-
 </html>
